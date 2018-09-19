@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 # Author: Tuncay ÇOLAK <tuncay.colak@tubitak.gov.tr>
 
-import git_operation
 import os
-from git_operation import Repo
+
 
 class Util(object):
     def __init__(self):
         super(Util, self).__init__()
+        self.plugin_version_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../conf/plugin_version.ods')
 
     @staticmethod
     def replace_all(text, dic):
@@ -35,3 +35,4 @@ class Util(object):
     @staticmethod
     def copy_package(self):
         pass
+

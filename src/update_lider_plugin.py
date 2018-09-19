@@ -21,7 +21,16 @@ class UpdateVersion(object):
             os.makedirs(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../plugins/'))
 
     def set_version(self, plugin_name, version):
-        file = self.plugin_path.format(plugin_name)+"/pom.xml"
-        self.util.replace(file, "<version>1.0.0</version>", "<version>"+version+"</version>")
+        print(version)
+        file_1 = self.plugin_path.format(plugin_name)+"/pom.xml"
+        print("----->>> "+file_1)
+        #file_1 dosyasındaki verison değeri eklentinin hangi lider versionu ile çalışacağını belirler. Eklenti versiyonu ile aynı olmak zorunda değildir.
+        self.util.replace(file_1, "<version>1.0.0</version>", "<version>"+str(version)+"</version>")
+        # mvn -N versions:update-child-modules
+
+        file_2 = self.plugin_path.format(plugin_name)+"/lider-{}/pom.xml".format(plugin_name)
+        self.util.replace(file_2, "<version>1.0.0</version>", "<version>"+str(version)+"</version>")
+        print(file_2)
+
 
 
