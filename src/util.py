@@ -3,6 +3,8 @@
 # Author: Tuncay ÇOLAK <tuncay.colak@tubitak.gov.tr>
 
 import os
+import shutil
+import subprocess
 
 
 class Util(object):
@@ -22,17 +24,73 @@ class Util(object):
 
     @staticmethod
     def replace(file_name, old_data, new_data):
-        with open(file_name, 'r') as file:
-            filedata = file.read()
+        try:
+            with open(file_name, 'r') as file:
+                filedata = file.read()
 
-        # Replace the target string
-        filedata = filedata.replace(old_data, new_data)
+            # Replace the target string
+            filedata = filedata.replace(old_data, new_data)
 
-        # Write the file out again
-        with open(file_name, 'w') as file:
-            file.write(filedata)
+            # Write the file out again
+            with open(file_name, 'w') as file:
+                file.write(filedata)
+        except Exception as e:
+            print(e)
 
     @staticmethod
-    def copy_package(self):
-        pass
+    def copy_file(source_full_path, destination_full_path):
+        try:
+            shutil.copy2(source_full_path, destination_full_path)
+        except Exception as e:
+            print(e)
+
+    @staticmethod
+    def move(source_full_path, destination_full_path):
+        try:
+            shutil.move(source_full_path, destination_full_path)
+        except:
+            raise
+
+    @staticmethod
+    def is_exist(full_path):
+        try:
+            return os.path.exists(full_path)
+        except:
+            raise
+
+    @staticmethod
+    def create_directory(dir_path):
+        try:
+            return os.makedirs(dir_path)
+        except:
+            raise
+
+    @staticmethod
+    def execute_command(command, working_directory):
+
+        try:
+            process = subprocess.Popen(command, stdin=None, env=None, cwd=working_directory, stderr=subprocess.PIPE,
+                                       stdout=subprocess.PIPE, shell=True)
+            result_code = process.wait()
+            p_out = process.stdout.read().decode("unicode_escape")
+            p_err = process.stderr.read().decode("unicode_escape")
+            if result_code == 0:
+                print(str(command) + " komutu başarıyla çalıştırıldı")
+            else:
+                print(str(command) + " komutu çalıştırılırken hata oluştu! " + str(p_err))
+        except Exception as e:
+            print(e)
+
+    @staticmethod
+    def read_file(full_path, mode='r'):
+        content = None
+        try:
+            with open(full_path, mode) as f:
+                content = f.read()
+        except:
+            raise
+        finally:
+            return content
+
+
 
