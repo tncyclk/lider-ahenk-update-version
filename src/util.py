@@ -5,6 +5,7 @@
 import os
 import shutil
 import subprocess
+import select
 
 
 class Util(object):
@@ -71,8 +72,13 @@ class Util(object):
         try:
             process = subprocess.Popen(command, stdin=None, env=None, cwd=working_directory, stderr=subprocess.PIPE,
                                        stdout=subprocess.PIPE, shell=True)
+            for line in iter(process.stdout.readline, b''):
+                print(line)
+            process.stdout.close()
             result_code = process.wait()
+
             p_out = process.stdout.read().decode("unicode_escape")
+            print(p_out)
             p_err = process.stderr.read().decode("unicode_escape")
             if result_code == 0:
                 print(str(command) + " komutu başarıyla çalıştırıldı")

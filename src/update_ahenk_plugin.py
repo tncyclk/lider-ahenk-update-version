@@ -21,3 +21,5 @@ class UpdateAhenkPlugin(object):
         file_3 = self.plugin_path.format(plugin_name)+"/ahenk-{0}/{0}/main.py".format(plugin_name)
         self.util.replace(file_3, "1.0.0", str(version))
 
+        self.util.execute_command('/bin/bash scripts/build-plugin.sh', self.plugin_path.format(plugin_name))
+
