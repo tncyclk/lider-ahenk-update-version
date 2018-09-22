@@ -19,9 +19,10 @@ class UpdateLiderPlugin(object):
 
         file_1 = self.plugin_path.format(plugin_name)+"/pom.xml"
 
-        #file_1 dosyasındaki verison değeri eklentinin hangi lider versionu ile çalışacağını belirler. Eklenti versiyonu ile aynı olmak zorunda değildir.
+        #file_1 dosyasındaki "<lider.ahenk.version>1.0.0-SNAPSHOT</lider.ahenk.version>" verison değeri eklentinin hangi lider versionu ile çalışacağını belirler. Eklenti versiyonu ile aynı olmak zorunda değildir.
 
-        self.util.replace(file_1, "<version>1.0.0</version>", "<version>"+str(lider_version)+"</version>")
+        self.util.replace(file_1, "<version>1.0.0</version>", "<version>"+str(version)+"</version>")
+        self.util.replace(file_1, "<lider.ahenk.version>1.0.0-SNAPSHOT</lider.ahenk.version>", "<lider.ahenk.version>"+str(lider_version)+"</lider.ahenk.version>")
         self.util.execute_command("mvn -N versions:update-child-modules", self.plugin_path.format(plugin_name))
         # mvn -N versions:update-child-modules
 
@@ -31,7 +32,7 @@ class UpdateLiderPlugin(object):
         ## Eğer eklentinin db projesi tasnımlanmış ise lider-script/pom.xml dosyasındaki db versiyonu güncellenmelidir.
 
         contents = self.util.read_file(file_2.format(plugin_name))
-        if 'lider-{}-db'.format(plugin_name) in contents:
+        if '<artifactId>lider-{}-db</artifactId>'.format(plugin_name) in contents:
             self.util.replace(file_2, "<version>1.0.0</version>", "<version>" + str(version) + "</version>")
         else:
             print("eklentiye ait db projesi tanımlanmamıştır...!!")

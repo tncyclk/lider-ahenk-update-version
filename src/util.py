@@ -62,7 +62,10 @@ class Util(object):
     @staticmethod
     def create_directory(dir_path):
         try:
-            return os.makedirs(dir_path)
+            if os.path.exists(dir_path):
+                print("dizin zaten var")
+            else:
+                return os.makedirs(dir_path)
         except:
             raise
 
@@ -97,6 +100,17 @@ class Util(object):
             raise
         finally:
             return content
+
+    @staticmethod
+    def write_file(full_path, content, mode='a+'):
+        file = None
+        try:
+            file = open(full_path, mode)
+            file.write(content)
+        except:
+            raise
+        finally:
+            file.close()
 
 
 
