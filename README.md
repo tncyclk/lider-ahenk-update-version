@@ -6,9 +6,9 @@
 - sudo apt install python3-git
 - pip3 install lxml
 
-### Konfigürasyonların Yapılması
+### Konfigürasyonun Yapılması
 - Version yükseltilecek eklentiler belirlenir.
-- Eklentilerin hanli lider versiyonu ile çalışacağı belirlenir.
+- Eklentilerin hangi lider versiyonu ile çalışacağı belirlenir.
 - Belirlenen versyion değerlerine göre conf dizini altında bulunan plugin_version.ods dosyası düzenlenir. Bu dosyada desteklenen lider versiyonu eklentinin versioyonu aynı olmadk sorunda değildir.
 
 
